@@ -1,3 +1,3 @@
-#include "external/catch.hpp"
-#include "external/hippomocks.h"
+#include <gtest/gtest.h>
+#include "gmock/gmock.h"
 #include "Controller.hpp"

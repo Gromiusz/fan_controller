@@ -1,36 +1,38 @@
-#define CATCH_CONFIG_MAIN
-#include "external/catch.hpp"
+#include <gtest/gtest.h>
+#include "gmock/gmock.h"
 #include "Fan.hpp"
 
-TEST_CASE("Fan - setSpeed() behavior", "[Fan]") {
+struct BasicFanTest : public ::testing::Test{
+    Fan f;
+    double disabledRpm = 0;
+    double minRpm = 1000;
+    double maxRpm = 3000;
+};
 
-    Fan f{};
-    auto disabledRpm = 0;
-    auto minRpm = 1000;
-    auto maxRpm = 3000;
+TEST_F(BasicFanTest, NewFanDisabled)
+{
+    ASSERT_EQ(f.getSpeed(), disabledRpm);
+}
 
-    SECTION("created fan is disabled") {
-        CHECK(f.getSpeed() == disabledRpm);
-    }
-    
-    SECTION("setting proper values") {
-        f.setSpeed(minRpm);
-        CHECK(f.getSpeed() == minRpm);
+TEST_F(BasicFanTest, getSpeed)
+{
+    f.setSpeed(minRpm);
+    ASSERT_EQ(f.getSpeed(), minRpm);
 
-        f.setSpeed(maxRpm);
-        CHECK(f.getSpeed() == maxRpm);
+    f.setSpeed(maxRpm);
+    ASSERT_EQ(f.getSpeed(), maxRpm);
 
-        f.setSpeed(disabledRpm);
-        CHECK(f.getSpeed() == disabledRpm);
-    }
+    f.setSpeed(disabledRpm);
+    ASSERT_EQ(f.getSpeed(), disabledRpm);
+}
 
-    SECTION("setting invalid values") {
-        auto before = f.getSpeed();
+TEST_F(BasicFanTest, setSpeed)
+{
+    auto before = f.getSpeed();
         
-        REQUIRE_THROWS_AS(f.setSpeed(minRpm - 1), std::invalid_argument);
-        CHECK(f.getSpeed() == before);
+    ASSERT_THROW(f.setSpeed(minRpm - 1), std::invalid_argument);
+    ASSERT_EQ(f.getSpeed(), before);
 
-        REQUIRE_THROWS_AS(f.setSpeed(maxRpm + 1), std::invalid_argument);
-        CHECK(f.getSpeed() == before);
-    }
+    ASSERT_THROW(f.setSpeed(maxRpm + 1), std::invalid_argument);
+    ASSERT_EQ(f.getSpeed(), before);
 }
