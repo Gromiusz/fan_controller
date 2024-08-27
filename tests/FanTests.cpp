@@ -2,19 +2,19 @@
 #include "gmock/gmock.h"
 #include "Fan.hpp"
 
-struct BasicFanTest : public ::testing::Test{
-    Fan f;
+struct TinyFanTest : public ::testing::Test{
+    TinyFan f;
     double disabledRpm = 0;
     double minRpm = 1000;
     double maxRpm = 3000;
 };
 
-TEST_F(BasicFanTest, NewFanDisabled)
+TEST_F(TinyFanTest, NewFanDisabled)
 {
     ASSERT_EQ(f.getSpeed(), disabledRpm);
 }
 
-TEST_F(BasicFanTest, getSpeed)
+TEST_F(TinyFanTest, getSpeed)
 {
     f.setSpeed(minRpm);
     ASSERT_EQ(f.getSpeed(), minRpm);
@@ -26,7 +26,7 @@ TEST_F(BasicFanTest, getSpeed)
     ASSERT_EQ(f.getSpeed(), disabledRpm);
 }
 
-TEST_F(BasicFanTest, setSpeed)
+TEST_F(TinyFanTest, setSpeed)
 {
     auto before = f.getSpeed();
         

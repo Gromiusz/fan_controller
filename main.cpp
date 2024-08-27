@@ -1,5 +1,6 @@
 #include "Controller.hpp"
-#include "SlowThermometer/SlowThermometer.hpp"
+#include "Thermometer.hpp"
+#include "SlowThermometer.hpp"
 #include "Fan.hpp"
 #include "LcdDisplay.hpp"
 #include <memory>
@@ -8,14 +9,16 @@
 int main()
 try {
     SlowThermometer t;
-    Fan f;
+    TinyFan f;
     double targetTemperature = 36.6;
     double tolerance = .5;
-    Controller oldController{t, f, targetTemperature, tolerance, nullptr};
-    oldController.updateRpm();
-    oldController.displayInfo();
+    auto display_ptr = std::make_shared<LcdDisplay>();
 
-    Controller newController{t, f, targetTemperature, tolerance, std::shared_ptr<LcdDisplay>()};
+    // Controller oldController{t, f, targetTemperature, tolerance, nullptr};
+    // oldController.updateRpm();
+    // oldController.displayInfo();
+
+    Controller newController{t, f, targetTemperature, tolerance, display_ptr};
     newController.updateRpm();
     newController.displayInfo();
 

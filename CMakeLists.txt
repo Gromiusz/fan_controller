@@ -19,9 +19,9 @@ find_package(GTest REQUIRED)
 include_directories(${GTEST_INCLUDE_DIRS})
 include(GoogleTest)
 
-
-add_compile_options(-Wall -Wextra -Wpedantic -g)
+#add_compile_options(-Wall -Wextra -Wpedantic -g)
 include_directories(.)
+include_directories(SlowThermometer)
 add_library(SlowThermometer-lib SlowThermometer/SlowThermometer.cpp)
 
 set(SRC_LIST
@@ -31,6 +31,8 @@ set(SRC_LIST
     Fan.cpp
     LcdDisplay.hpp
     LcdDisplay.cpp
+    Thermometer.hpp
+    Thermometer.cpp
 )
 
 add_library(${PROJECT_NAME}-lib ${SRC_LIST})

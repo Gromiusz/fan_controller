@@ -10,3 +10,8 @@ double SlowThermometer::getTemperature() const
     std::normal_distribution<> d{36.6, 2.0};
     return d(gen);
 }
+
+std::unique_ptr<Thermometer> SlowThermometer::clone() const 
+{
+    return std::make_unique<SlowThermometer>(*this);
+}
