@@ -28,12 +28,12 @@ public:
     std::unique_ptr<Fan> clone() const override;
 };
 
-class FanDummy : public Fan
-{
-public:
-    void setSpeed(int) override;
-    int getSpeed() const override;
-    bool disable() override;
-    bool enable() override;
-    std::unique_ptr<Fan> clone() const override;
-};
+// class FanDummy : public Fan
+// {
+// public:
+//     void setSpeed(int) override;
+//     int getSpeed() const override;
+//     bool disable() override;
+//     bool enable() override;
+//     std::unique_ptr<Fan> clone() const override;
+// };

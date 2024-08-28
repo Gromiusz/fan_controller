@@ -22,6 +22,8 @@ include(GoogleTest)
 #add_compile_options(-Wall -Wextra -Wpedantic -g)
 include_directories(.)
 include_directories(SlowThermometer)
+include_directories(tests/mocks)
+
 add_library(SlowThermometer-lib SlowThermometer/SlowThermometer.cpp)
 
 set(SRC_LIST

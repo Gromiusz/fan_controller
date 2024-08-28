@@ -9,9 +9,9 @@ public:
     virtual std::unique_ptr<Thermometer> clone() const = 0;
 };
 
-class ThermometerDummy : public Thermometer
-{
-public:
-    double getTemperature() const override;
-    std::unique_ptr<Thermometer> clone() const override;
-};
+// class ThermometerDummy : public Thermometer
+// {
+// public:
+//     double getTemperature() const override;
+//     std::unique_ptr<Thermometer> clone() const override;
+// };

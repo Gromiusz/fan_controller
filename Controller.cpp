@@ -10,13 +10,14 @@ Controller::Controller(const Thermometer& _thermometer,
                        fan(_fan.clone()), 
                        targetTemperature(target), 
                        tolerance(_tolerance), 
-                       lcdDisplay(display_ptr)
+                       lcdDisplay(display_ptr),
+                       actualTemp(-1)
 {}
 
 
 void Controller::updateRpm() 
 {
-    auto actualTemp = thermometer->getTemperature();
+    actualTemp = thermometer->getTemperature();
     auto differenceTemp = std::abs(actualTemp - targetTemperature);
     fan->enable();
     if(differenceTemp > tolerance)
@@ -33,11 +34,19 @@ void Controller::updateRpm()
     }
 }
 
+std::string Controller::printInfo() const
+{
+    const std::string output = 
+    "\nActual Temp: " + std::to_string(actualTemp) +
+    "\nTarget Temp" + std::to_string(targetTemperature) +
+    "\nFan speed: " + std::to_string(fan->getSpeed()) + "\n";
+    return output;
+}
+
 void Controller::displayInfo() const 
 {
     if(lcdDisplay)
     {
-        const std::string output = std::to_string(fan->getSpeed());
-        lcdDisplay->print(output);
+        lcdDisplay->print(printInfo());
     }
 }

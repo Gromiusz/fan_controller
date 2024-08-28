@@ -12,9 +12,11 @@ class Controller {
     double targetTemperature;
     double tolerance;
     std::shared_ptr<LcdDisplay> lcdDisplay;
+    double actualTemp;
 
 public:
     Controller(const Thermometer&, const Fan&, double, double, const std::shared_ptr<LcdDisplay>&);
     void updateRpm();
+    std::string printInfo() const;
     void displayInfo() const;
 };

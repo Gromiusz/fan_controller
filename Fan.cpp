@@ -44,20 +44,20 @@ std::unique_ptr<Fan> TinyFan::clone() const {
     return std::make_unique<TinyFan>(*this);
 }
 
-void FanDummy::setSpeed(int) {}
+// void FanDummy::setSpeed(int) {}
 
-int FanDummy::getSpeed() const {
-    return 1000;
-}
+// int FanDummy::getSpeed() const {
+//     return 1000;
+// }
 
-bool FanDummy::disable() {
-    return false;
-}
+// bool FanDummy::disable() {
+//     return false;
+// }
 
-bool FanDummy::enable() {
-    return true;
-}
+// bool FanDummy::enable() {
+//     return true;
+// }
 
-std::unique_ptr<Fan> FanDummy::clone() const {
-    return std::make_unique<FanDummy>(*this);
-}
+// std::unique_ptr<Fan> FanDummy::clone() const {
+//     return std::make_unique<FanDummy>(*this);
+// }
