@@ -1,5 +1,7 @@
 #include "Controller.hpp"
 #include <iostream>
+#include <iomanip>
+#include <sstream>
 
 Controller::Controller(const Thermometer& _thermometer,
                        const Fan& _fan,
@@ -13,7 +15,6 @@ Controller::Controller(const Thermometer& _thermometer,
                        lcdDisplay(display_ptr),
                        actualTemp(-1)
 {}
-
 
 void Controller::updateRpm() 
 {
@@ -36,10 +37,20 @@ void Controller::updateRpm()
 
 std::string Controller::printInfo() const
 {
+    std::ostringstream oss;
+    oss << std::fixed << std::setprecision(2) << actualTemp;
+    std::string actualTempSTR = oss.str();
+
+    oss.clear();
+    oss.str("");
+    oss << std::fixed << std::setprecision(2) << targetTemperature;
+    std::string targetTemperatureSTR = oss.str();
+
     const std::string output = 
-    "\nActual Temp: " + std::to_string(actualTemp) +
-    "\nTarget Temp" + std::to_string(targetTemperature) +
+    "\nActual Temp: " + actualTempSTR +
+    "\nTarget Temp: " + targetTemperatureSTR +
     "\nFan speed: " + std::to_string(fan->getSpeed()) + "\n";
+
     return output;
 }
 
