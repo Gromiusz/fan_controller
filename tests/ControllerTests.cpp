@@ -117,3 +117,29 @@ TEST_F(ControllerTest, updateRpmThrow)
     // auto result = controller.printInfo();
     // ASSERT_EQ(result, "\nActual Temp: 38.00\nTarget Temp: 36.01\nFan speed: 3000\n");
 }
+
+TEST_F(ControllerTest, updateRpmNotThrow)
+{
+    double targetTemperature = 36.0;
+    Controller controller{t, f, targetTemperature, tolerance, nullptr};
+
+    // controller.updateRpm();
+    ASSERT_NO_THROW(controller.updateRpm());
+    // auto result = controller.printInfo();
+    // ASSERT_EQ(result, "\nActual Temp: 38.00\nTarget Temp: 36.01\nFan speed: 3000\n");
+}
+
+TEST(ControllerwithMocks, updateRpm)
+{
+    testing::NiceMock<ThermometerMock> t;
+    testing::NiceMock<FanMock > f;
+    double tolerance = .5;
+    double targetTemperature = 36.0;
+    EXPECT_CALL(t, clone()).WillOnce(testing::Return(std::make_unique<ThermometerMock>()));
+    EXPECT_CALL(f, clone()).WillOnce(testing::Return(std::make_unique<FanMock>()));
+    
+    Controller controller{t, f, targetTemperature, tolerance, nullptr};
+    
+}
+
+
