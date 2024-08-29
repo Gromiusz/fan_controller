@@ -129,17 +129,58 @@ TEST_F(ControllerTest, updateRpmNotThrow)
     // ASSERT_EQ(result, "\nActual Temp: 38.00\nTarget Temp: 36.01\nFan speed: 3000\n");
 }
 
-TEST(ControllerwithMocks, updateRpm)
+TEST(ControllerwithMocks, updateRpm0)
 {
-    testing::NiceMock<ThermometerMock> t;
-    testing::NiceMock<FanMock > f;
-    double tolerance = .5;
-    double targetTemperature = 36.0;
-    EXPECT_CALL(t, clone()).WillOnce(testing::Return(std::make_unique<ThermometerMock>()));
-    EXPECT_CALL(f, clone()).WillOnce(testing::Return(std::make_unique<FanMock>()));
+    // testing::NiceMock<ThermometerMock> t;
+    // testing::NiceMock<FanMock > f;
+    // double tolerance = .5;
+    // double targetTemperature = 36.0;
+    // EXPECT_CALL(t, clone()).WillOnce(testing::Return(std::make_unique<ThermometerMock>()));
+    // EXPECT_CALL(f, clone()).WillOnce(testing::Return(std::make_unique<FanMock>()));
     
+    // Controller controller{t, f, targetTemperature, tolerance, nullptr};
+
+    testing::NiceMock<ThermometerMock> t;
+    testing::NiceMock<FanMock> f;
+
+    auto tClone = std::make_unique<testing::NiceMock<ThermometerMock>>();
+    auto fClone = std::make_unique<testing::NiceMock<FanMock>>();
+
+    EXPECT_CALL(t, clone()).WillOnce(testing::Return(ByMove(std::move(tClone))));
+    EXPECT_CALL(f, clone()).WillOnce(testing::Return(ByMove(std::move(fClone))));
+
+    double tolerance = 0.5;
+    double targetTemperature = 36.0;
     Controller controller{t, f, targetTemperature, tolerance, nullptr};
+
+    EXPECT_CALL(*tClone, getTemperature()).WillOnce(testing::Return(36.49));
+    EXPECT_CALL(*fClone, disable()).WillOnce(testing::Return(0));
+
+    controller.updateRpm();
     
 }
+
+// TEST(ControllerwithMocks, updateRpm1500)
+// {
+//     testing::NiceMock<ThermometerMock> t;
+//     testing::NiceMock<FanMock> f;
+
+//     auto tClone = std::make_unique<testing::NiceMock<ThermometerMock>>();
+//     auto fClone = std::make_unique<testing::NiceMock<FanMock>>();
+
+//     EXPECT_CALL(t, clone()).WillOnce(testing::Return(ByMove(std::move(tClone))));
+//     EXPECT_CALL(f, clone()).WillOnce(testing::Return(ByMove(std::move(fClone))));
+
+//     double tolerance = 0.5;
+//     double targetTemperature = 36.0;
+//     Controller controller{t, f, targetTemperature, tolerance, nullptr};
+
+//     EXPECT_CALL(*tClone, getTemperature()).WillOnce(testing::Return(37.0));
+//     EXPECT_CALL(*fClone, enable()).WillOnce(testing::Return(0));
+//     EXPECT_CALL(*fClone, setSpeed(1500)).Times(1);
+
+//     controller.updateRpm();
+    
+// }
 
 
